@@ -1,0 +1,24 @@
+{
+  "id": "FEAT-003",
+  "type": "chore",
+  "description": "Wire the landing and retained design-system routes, then complete constrained visual verification and landing documentation.",
+  "status": "completed",
+  "steps": [
+    "Read context.json and FEAT-002.json first. Update App and entry metadata so / renders the full landing page and /design-system retains the atom catalog without adding an unnecessary routing dependency.",
+    "Capture local section screenshots at the exact audit viewports and compare them with the supplied audit screenshots; fix only integration or visual fidelity issues within the landing project.",
+    "Write verification.md with viewport/state results, remaining inferred/unknown behavior, and any deviations; ensure assets.md and screenshots are under docs/refinamento/landing only.",
+    "Run the final build and permitted-path check, update this FEAT findings field with commands/results, and commit locally without pushing."
+  ],
+  "acceptance_criteria": [
+    "Both / and /design-system load from the built preview without asset 404s.",
+    "Verification documentation covers hero, feature, story, why-choose, menu, testimonials, gallery, FAQ, navbar, and footer at desktop/tablet/mobile plus interactions.",
+    "npm run build passes and changes stay within the two permitted roots."
+  ],
+  "verification": [
+    "npm ci",
+    "npm run build",
+    "Run the local Playwright screenshot/state verification and inspect docs/refinamento/landing/verification.md."
+  ],
+  "blocked_reason": null,
+  "findings": "Implemented the pathname-based / and /design-system routes without adding a routing dependency, updated route titles, and retained the reusable atom catalog in the landing project. Captured built-page Chromium screenshots at 1440x900, 810x1080, and 390x844 plus the design-system route. npm run build passed. Playwright package was unavailable, so automated console/network assertions could not run; local Chromium capture and build verification passed. Verification details are in docs/refinamento/landing/verification.md. Changes remain within the permitted roots. No repository metadata existed before this feature, so a local commit could not be created."
+}
