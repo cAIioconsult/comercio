@@ -16,11 +16,17 @@
   --color-primitive-amber-600-a07: rgba(217, 119, 6, 0.07);
   --color-primitive-copper-hover: #d68042;
   --color-primitive-black-a10: rgba(0, 0, 0, 0.1);
+  --color-primitive-black-a55: rgba(0, 0, 0, 0.55);
+  --color-primitive-black-a75: rgba(0, 0, 0, 0.75);
+  --color-primitive-white-a08: rgba(255, 255, 255, 0.08);
   --color-primitive-transparent-gray-0: rgba(84, 84, 84, 0);
   --color-semantic-bg-page: var(--color-primitive-black);
   --color-semantic-bg-surface: var(--color-primitive-black);
   --color-semantic-bg-overlay-subtle: var(--color-primitive-white-10);
   --color-semantic-bg-social-hover: var(--color-primitive-copper-hover);
+  --color-semantic-bg-navbar: var(--color-primitive-black-a55);
+  --color-semantic-bg-mobile-menu: var(--color-primitive-black-a75);
+  --color-semantic-border-navbar: var(--color-primitive-white-a08);
   --color-semantic-text-heading: var(--color-primitive-stone-200);
   --color-semantic-text-body: var(--color-primitive-stone-200);
   --color-semantic-text-lead: var(--color-primitive-stone-100);
