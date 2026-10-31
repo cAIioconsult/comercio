@@ -1,0 +1,14 @@
+/*
+ * Excecoes de componente: valores medidos na auditoria (docs/refinamento/auditoria/auditoria.md)
+ * que nao estao em tokens/tokens.json. Nao promovidos a token da fonte, por isso ficam aqui.
+ * Lista e justificativa em docs/refinamento/componentes-base.md (secao "Literais restantes").
+ */
+:root {
+  /* Barras do sinal +/- do FAQ: 16x2 px (auditoria, secao 4, icone do FAQ). */
+  --component-faq-bar-length: 16px;
+  --component-faq-bar-thickness: 2px;
+
+
+  /* Opacidade do estado desabilitado: NAO medida na auditoria (inferida). */
+  --component-disabled-opacity: 0.5;
+}
