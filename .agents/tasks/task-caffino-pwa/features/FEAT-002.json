@@ -1,0 +1,25 @@
+{
+  "id": "FEAT-002",
+  "type": "feat",
+  "description": "Add safe production-only offline behavior and validate that the landing's content, image, and price data remain parameterized in src/content.",
+  "status": "completed",
+  "steps": [
+    "Create public/sw.js with a versioned cache, app-shell/local-asset precaching, network-first navigation with cached / fallback, cache-first same-origin static assets with network fallback, failed-response protection, cross-origin exclusion, and old-cache cleanup.",
+    "Register /sw.js from src/main.tsx only when import.meta.env.PROD and serviceWorker are available, logging registration failures without blocking rendering; leave Vite development unregistered.",
+    "Review App.tsx and src/content/*.ts to preserve the existing data boundary for visible copy, photos, product prices, and locale/currency; make only narrowly scoped content-boundary edits if needed and record the result in docs/refinamento/landing/verification.md.",
+    "Run build, preview, route, asset, production-registration, and offline fallback checks, then record commands and observed evidence in the landing verification document."
+  ],
+  "acceptance_criteria": [
+    "npm run dev does not register the service worker, while a production preview registers /sw.js without preventing React rendering.",
+    "The production worker uses a versioned cache, does not cache failed or cross-origin responses, serves cached navigation fallback at / when offline, and leaves /design-system navigable.",
+    "Visible landing content, photos, and prices remain supplied by src/content modules rather than newly hardcoded in components.",
+    "The documented production build and preview verification passes for /, /design-system, local assets, manifest metadata, and offline root fallback."
+  ],
+  "verification": [
+    "From /home/caio/projects/templates/caffino-landing run npm run build and confirm it passes.",
+    "Run npm run preview, inspect production registration and offline / fallback in browser DevTools, and verify /design-system renders.",
+    "Run npm run dev and confirm no worker is registered and development module errors remain visible."
+  ],
+  "blocked_reason": null,
+  "findings": "Implemented public/sw.js with caffino-v1 app/asset caches, local app-shell precaching, network-first navigation fallback to /, cache-first same-origin static assets, failed-response protection, cross-origin exclusion, and old-cache cleanup. Registered /sw.js only behind import.meta.env.PROD and navigator.serviceWorker availability, with non-blocking error logging. App.tsx remains content-driven through src/content for copy, photos, prices, locale, and currency. Verification passed: npm run build; npm run preview route/asset smoke checks for /, /design-system, /sw.js, manifest, and icon; npm run dev development-module check; manifest parse; node --check public/sw.js. Chromium/Playwright is unavailable in this environment, so DevTools registration/offline click-through remains for the convergence reviewer; source and preview evidence are recorded in docs/refinamento/landing/verification.md."
+}

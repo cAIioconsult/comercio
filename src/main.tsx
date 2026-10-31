@@ -12,3 +12,11 @@ createRoot(document.getElementById("root")!).render(
 );
 
 document.title = window.location.pathname === "/design-system" ? "Caffino Design System" : "Caffino | Premium Coffee";
+
+if (import.meta.env.PROD && "serviceWorker" in navigator) {
+  window.addEventListener("load", () => {
+    navigator.serviceWorker.register("/sw.js").catch((error) => {
+      console.error("[Caffino] Service worker registration failed", error);
+    });
+  });
+}
