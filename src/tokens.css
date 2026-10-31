@@ -163,7 +163,7 @@
     --layout-section-padding-top: var(--space-80);
     --layout-section-padding-top-story: var(--space-100);
     --layout-hero-padding-top: var(--space-180);
-    --layout-hero-padding-bottom: var(--space-350);
+    --layout-hero-padding-bottom: var(--space-180);
     --layout-container-gap: var(--space-50);
     --layout-title-gap: var(--space-35);
   }
