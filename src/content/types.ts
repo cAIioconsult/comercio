@@ -24,4 +24,5 @@ export type Feature = { title: string; description: string; icon: ImageAsset };
 export type Value = { title: string; description: string };
 export type Testimonial = { quote: string; name: string; role: string; avatar: ImageAsset; image?: ImageAsset };
 export type FaqItem = { question: string; answer: string };
-export type FooterLinkGroup = { title: string; links: string[] };
+export type FooterLink = { label: string; href?: string };
+export type FooterLinkGroup = { title: string; links: FooterLink[] };
