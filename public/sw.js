@@ -53,7 +53,7 @@ self.addEventListener("activate", (event) => {
       caches.keys().then((cacheNames) =>
         Promise.all(
           cacheNames
-            .filter((cacheName) => !CURRENT_CACHES.includes(cacheName))
+            .filter((cacheName) => cacheName.startsWith("caffino-") && !CURRENT_CACHES.includes(cacheName))
             .map((cacheName) => caches.delete(cacheName)),
         ),
       ),
