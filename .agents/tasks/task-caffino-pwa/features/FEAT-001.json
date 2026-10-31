@@ -1,0 +1,23 @@
+{
+  "id": "FEAT-001",
+  "type": "feat",
+  "description": "Add the Caffino install manifest, branded PNG icons, and document head metadata while retaining the existing SVG favicon and pathname routes.",
+  "status": "completed",
+  "steps": [
+    "Generate public/icons/caffino-192.png and public/icons/caffino-512.png from public/images/misc/misc-02.avif with the installed Python Pillow tool, using square crops and the 512px file as maskable.",
+    "Create public/manifest.webmanifest with Caffino names, root start URL/scope, standalone display, pt-BR language, description, black/amber colors, and both PNG icon sizes.",
+    "Update index.html with the manifest link, theme-color, and Apple mobile web-app metadata while leaving the existing /images/misc/misc-01.svg favicon unchanged.",
+    "Run the production build and verify Vite emits the manifest, icons, and favicon at the expected root-relative paths."
+  ],
+  "acceptance_criteria": [
+    "The manifest contains name and short_name Caffino, start_url /, display standalone, lang pt-BR, description, coherent theme/background colors, and 192x192 and 512x512 PNG icons.",
+    "The built HTML links the manifest and theme/apple metadata, and still links /images/misc/misc-01.svg as favicon.",
+    "npm run build passes and emits both icon PNGs, manifest.webmanifest, and the existing favicon."
+  ],
+  "verification": [
+    "From /home/caio/projects/templates/caffino-landing run npm run build and confirm it passes.",
+    "Run npm run preview and inspect / in a browser; confirm manifest metadata and icon requests succeed and /design-system still renders."
+  ],
+  "blocked_reason": null,
+  "findings": "Implemented the manifest, head metadata, and Pillow-generated square PNG icons. npm run build passed. Built output contains dist/manifest.webmanifest, dist/icons/caffino-192.png (192x192), dist/icons/caffino-512.png (512x512), and dist/images/misc/misc-01.svg. A dedicated production preview served at http://127.0.0.1:4175/ after the default preview port was occupied; /, /design-system, the manifest, both icons, and the existing SVG favicon all returned HTTP 200, and the built HTML retained the favicon plus manifest/theme/Apple metadata. No service-worker changes were made; FEAT-002 owns that work. Chromium was not available on PATH, so route and asset validation used production preview HTTP checks and built-artifact inspection."
+}
