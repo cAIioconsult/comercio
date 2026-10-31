@@ -28,18 +28,15 @@ const PRECACHE_URLS = [
 self.addEventListener("install", (event) => {
   event.waitUntil(
     caches.open(APP_CACHE).then(async (cache) => {
-      await Promise.all(PRECACHE_URLS.map((url) => cacheResource(cache, url)));
+      const shellResponse = await cacheRequiredResource(cache, "/");
+      const shell = await shellResponse.text();
+      const builtAssets = [...shell.matchAll(/(?:src|href)="(\/assets\/[^\"]+)"/g)].map((match) => match[1]);
+      const requiredUrls = [...new Set([...PRECACHE_URLS.filter((url) => url !== "/"), ...builtAssets])];
 
-      try {
-        const shellResponse = await fetch("/", { cache: "no-store" });
-        if (shellResponse.ok) {
-          await cache.put("/", shellResponse.clone());
-          const shell = await shellResponse.text();
-          const builtAssets = [...shell.matchAll(/(?:src|href)="(\/assets\/[^\"]+)"/g)].map((match) => match[1]);
-          await Promise.all(builtAssets.map((url) => cacheResource(cache, url)));
-        }
-      } catch {
-        // A failed shell request must not abort service-worker installation.
+      await Promise.all(requiredUrls.map((url) => cacheRequiredResource(cache, url)));
+
+      if (!await cache.match("/")) {
+        throw new Error("Caffino app shell was not cached");
       }
     }).then(() => self.skipWaiting()),
   );
@@ -79,15 +76,14 @@ self.addEventListener("fetch", (event) => {
   }
 });
 
-async function cacheResource(cache, url) {
-  try {
-    const response = await fetch(url, { cache: "no-store" });
-    if (response.ok) {
-      await cache.put(url, response);
-    }
-  } catch {
-    // A failed precache request must not abort service-worker installation.
+async function cacheRequiredResource(cache, url) {
+  const response = await fetch(url, { cache: "no-store" });
+  if (!response.ok) {
+    throw new Error(`Failed to precache ${url}: ${response.status}`);
   }
+
+  await cache.put(url, response.clone());
+  return response;
 }
 
 async function networkFirstNavigation(request) {
